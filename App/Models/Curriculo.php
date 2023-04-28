@@ -27,13 +27,20 @@ class Curriculo
         $dthr
     ) {
         $this->nome = htmlspecialchars(trim($nome));
-        $this->email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email
-            : throw new Exception("Email não é válido");
-        $this->telefone = strlen(trim($telefone)) == 11 ? trim($telefone)
-            : throw new Exception("Telefone não é válido");
+
+        if(filter_var($email, FILTER_VALIDATE_EMAIL)) $this->email = $email;
+        else throw new Exception("Email não é válido");
+
+        if(strlen(trim($telefone)) == 11) $this->telefone = trim($telefone);
+        else throw new Exception("Telefone não é válido");
+
         $this->cargo = htmlspecialchars(trim($cargo));
-        $this->escolaridade = in_array($escolaridade, ['FC', 'FI', 'MC', 'MI', 'SC', 'SI'])
-            ? $escolaridade : throw new Exception("Escolaridade não é válida");
+
+        if(in_array($escolaridade, ['FC', 'FI', 'MC', 'MI', 'SC', 'SI']))
+            $this->escolaridade = $escolaridade;
+        else 
+            throw new Exception("Escolaridade não é válida");
+
         $this->observacoes = !empty($observacoes) ? htmlspecialchars(trim($observacoes)) 
             : $observacoes;
 

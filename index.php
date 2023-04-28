@@ -1,9 +1,5 @@
 <?php
-    require_once 'vendor/autoload.php';
-
-    $curriculoController = new \App\Controller\CurriculoController();
-
-    if(!empty($_POST)) var_dump($_POST);
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -22,8 +18,7 @@
         </header>
         <main class="container mb-4">
             <div class="row d-flex justify-content-center">
-                <form class="col-lg-10 col-12" action="<?php $curriculoController->submitCurriculo(); ?>" 
-                    onsubmit="return validateForm();">
+                <form class="col-lg-10 col-12" enctype="multipart/form-data">
         
                     <div class="mb-3">
                         <label for="nome">Nome *</label>
@@ -101,44 +96,30 @@
                             aria-describedby="invalidCurriculo invalidCurriculoType 
                             invalidCurriculoSize">
 
-                        <div id="invalidCurriculo" class="invalid-feedback">
+                        <div id="invalidCurriculo" class="invalid-feedback d-none">
                             Curriculo é obrigatório.
                         </div>
-                        <div id="invalidCurriculoType" class="invalid-feedback">
+                        <div id="invalidCurriculoType" class="invalid-feedback d-none">
                             Formato do Curriculo não é aceito.
                         </div>
-                        <div id="invalidCurriculoSize" class="invalid-feedback">
+                        <div id="invalidCurriculoSize" class="invalid-feedback d-none">
                             Tamanho do curriculo é grande demais. Máx.: 1MB.
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="mb-3 col-6">
-                            <label for="date" class="mb-1">
-                                Data *
-                            </label>
+                    <div class="mb-3">
+                        <label for="date">Data/Hora *</label>
+                        <div class="input-group">
                             <input class="form-control" type="date" name="date" id="date"
                                 aria-describedby="invalidData"
                                 max="<?php echo (new DateTime())->format('Y-m-d'); ?>">
-
+                            <input class="form-control" type="time" name="time" id="time">
                             <div id="invalidData" class="invalid-feedback">
-                                Data inválida.
+                                Data hora inválido.
                             </div>
                         </div>
-                        <div class="mb-3 col-6">
-                            <label for="time" class="mb-1">
-                                Hora *
-                            </label>
-                            <input class="form-control" type="time" name="time" id="time"
-                                aria-describedby="invalidTime">
-
-                            <div id="invalidTime" class="invalid-feedback">
-                                Tempo inválido.
-                            </div>
-                        </div>
-
                     </div>
         
-                    <button class="btn btn-purple w-100 p-2">Enviar Curriculo</button>
+                    <button type="submit" class="btn btn-purple w-100 p-2">Enviar Curriculo</button>
                 </form>
             </div>
         </main>
@@ -146,5 +127,6 @@
     <script src="vendor/components/jquery/jquery.min.js"></script>
     <script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="vendor/igorescobar/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="src/js/sweetalert2.js"></script>
     <script src="src/js/main.js"></script>
 </html>
