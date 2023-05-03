@@ -18,7 +18,8 @@ $("form").submit(function(e){
     if(validateForm()) submitForm();
 });
 
-function validateForm() {
+function validateForm() 
+{
 
     var isValid = true;
     var commonsInputs = [
@@ -105,7 +106,9 @@ function validateForm() {
     return isValid;
 }
 
-function submitForm(){
+async function submitForm()
+{
+    var sweet_loader = '<div class="sweet_loader"><svg viewBox="0 0 140 140" width="140" height="140"><g class="outline"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></g><g class="circle"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="#71BBFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="200" stroke-dasharray="300"></path></g></svg></div>';
 
     dataSubmition = new FormData();
     dataSubmition.append('urlFunction', "submitForm");
@@ -128,47 +131,46 @@ function submitForm(){
         data: dataSubmition,
         dataType: 'json',
         processData: false,
-        contentType: false
+        contentType: false,
+        beforeSend: function() {
+            swal.fire({
+                html: '<h5>Carregando...</h5>',
+                showConfirmButton: false,
+                backdrop: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                onRender: function() {
+                     // there will only ever be one sweet alert open.
+                    $('.swal2-content').prepend(sweet_loader);
+                }
+            });
+        }
     }).done(function(data) {
 
-        if (data.status == 200) {
-
+        if (data.status == 200) 
+        {
             Swal.fire({
-                text: 'Salvo dos favoritos',
-                target: '#custom-target',
-                icon: "success",
-                customClass: {
-                    container: 'position-absolute'
-                },
-                toast: true,
-                position: 'bottom-left',
-                timer: 1500
+                text: data.message,
+                icon: "success"
+            }).then(() => {
+                location.reload();
             });
-        } else {
+
+        }
+        else 
+        {
             Swal.fire({
-                text: 'Algo deu errado no controller ou banco',
-                target: '#custom-target',
+                text: data.message,
                 icon: "error",
-                customClass: {
-                    container: 'position-absolute'
-                },
-                toast: true,
-                position: 'bottom-left',
-                timer: 3000
             });
         }
 
     }).fail(function(jqXHR, textStatus) {
         Swal.fire({
-            text: 'Algo deu errado no controller ou banco',
-            target: '#custom-target',
+            text: textStatus,
             icon: "error",
-            customClass: {
-                container: 'position-absolute'
-            },
-            toast: true,
-            position: 'bottom-left',
-            timer: 1500
         });
     });
 }

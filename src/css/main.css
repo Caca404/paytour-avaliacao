@@ -9,3 +9,7 @@
     background-color: rgb(111, 26, 190);
     color: white;
 }
+
+textarea{
+    max-height: 200px;
+}

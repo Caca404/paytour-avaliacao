@@ -6,5 +6,5 @@ require_once 'vendor/autoload.php';
 
 $router = new Router();
 
-if(isset($_POST)) echo $router->findRoute($_POST['urlFunction']);
-else throw new \Exception("Metodo negado.", 405);
+if($_SERVER['REQUEST_METHOD'] === 'POST') echo $router->findRoute($_POST['urlFunction']);
+else header("HTTP/1.0 405 Method Not Allowed");
