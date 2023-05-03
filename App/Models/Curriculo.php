@@ -109,4 +109,17 @@ class Curriculo
     {
         $this->dthr = new DateTime($dthr);
     }
+
+    public function getEscolaridadeName()
+    {
+        $escolaridade = [
+            "FI" => "Fundamental Incompleto", 
+            "FC" => "Fundamental Completo", 
+            "MI" => "Ensino Médio Incompleto", 
+            "MC" => "Ensino Médio Completo", 
+            "SI" => "Superior Incompleto", 
+            "SC" => "Superior Completo"
+        ];
+        return $escolaridade[$this->escolaridade];
+    }
 }

@@ -132,7 +132,7 @@ class CurriculoController{
                 </div>
                 <div>
                     <label>Escolaridade</label>
-                    <input type='text' value='".$curriculo->getEscolaridade()."' />
+                    <input type='text' value='".$curriculo->getEscolaridadeName()."' />
                 </div>
                 <div>
                     <label>Observações</label>
